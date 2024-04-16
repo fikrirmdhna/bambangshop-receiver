@@ -66,7 +66,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Create Notification database and Notification repository struct skeleton.`
     -   [x] Commit: `Implement add function in Notification repository.`
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,10 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+1. Dalam kasus ini, RwLock<Vec<Notification>> digunakan untuk menyinkronkan akses ke vektor notifikasi karena memungkinkan beberapa reader atau satu writer pada satu waktu. Ini diperlukan karena metode add mungkin dipanggil secara bersamaan dari beberapa thread, dan tanpa sinkronisasi, bisa terjadi ras data yang mengarah ke perilaku yang tidak terdefinisi. Menggunakan RwLock memastikan bahwa beberapa thread dapat membaca vektor secara bersamaan tanpa saling memblokir, tetapi ketika sebuah thread ingin memodifikasi vektor (seperti menambahkan notifikasi baru), itu akan memperoleh kunci eksklusif, memastikan bahwa hanya satu thread yang dapat memodifikasi vektor pada satu waktu untuk mencegah korupsi data.
+Kami tidak menggunakan Mutex di sini karena Mutex hanya memungkinkan satu thread pada satu waktu untuk mengakses data yang dijaganya, baik untuk membaca atau menulis. Karena kami memiliki skenario di mana beberapa thread mungkin ingin membaca notifikasi secara bersamaan (seperti saat mencantumkan semua notifikasi), menggunakan RwLock memberikan konkurensi yang lebih baik dengan memungkinkan beberapa reader.
+
+2. Dalam Rust, mengubah konten dari variabel statik umumnya tidak diperbolehkan karena fokus bahasa pada keamanan dan mencegah perilaku yang tidak terdefinisi. Aturan ownership dan borrowing Rust memastikan keamanan memori pada waktu kompilasi, dan mengizinkan mutasi variabel statik melalui fungsi statik bisa menyebabkan berbagai masalah, termasuk ras data, ketidakamanan memori, dan kesulitan dalam penalaran tentang kode.
+Dengan tidak mengizinkan mutasi variabel statik, Rust memastikan bahwa variabel tersebut diakses dengan cara yang terkendali dan dapat diprediksi, mencegah kelemahan umum yang terkait dengan status bersama yang dapat dimutasi. Sebagai gantinya, Rust mendorong penggunaan primitif konkurensi seperti kunci (Mutex, RwLock), saluran, atau mekanisme sinkronisasi lainnya untuk memodifikasi status bersama secara aman di seluruh thread. 
 
 #### Reflection Subscriber-2
