@@ -77,7 +77,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement receive function in Notification controller.`
     -   [x] Commit: `Implement list_messages function in Notification service.`
     -   [x] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -92,3 +92,8 @@ Kita tidak menggunakan Mutex di sini karena Mutex hanya memungkinkan satu thread
 Dengan tidak mengizinkan mutasi variabel statik, Rust memastikan bahwa variabel tersebut diakses dengan cara yang terkendali dan dapat diprediksi, mencegah kelemahan umum yang terkait dengan status bersama yang dapat dimutasi. Sebagai gantinya, Rust mendorong penggunaan primitif konkurensi seperti kunci (Mutex, RwLock), saluran, atau mekanisme sinkronisasi lainnya untuk memodifikasi status bersama secara aman di seluruh thread. 
 
 #### Reflection Subscriber-2
+1. Dari kode yang disediakan, sepertinya fokus utamanya adalah mengikuti langkah-langkah tutorial untuk mengimplementasikan sistem notifikasi. Namun, file src/lib.rs berisi konfigurasi dan utilitas tambahan seperti AppConfig, penanganan kesalahan, dan setup klien HTTP menggunakan reqwest. Ini adalah komponen penting untuk fungsionalitas dan kekokohan aplikasi tetapi mungkin tidak secara eksplisit dibahas dalam langkah-langkah tutorial. Menjelajahi dan memahami bagian tambahan kode ini penting untuk membangun aplikasi yang lengkap dan terstruktur dengan baik.
+
+2. Observer pattern menyederhanakan proses penambahan subscriber baru ke sistem notifikasi. Dengan memisahkan subscriber dari logika aplikasi utama, Anda dapat dengan mudah memperkenalkan jenis subscriber baru tanpa memodifikasi kode yang sudah ada. Ini memungkinkan fleksibilitas dan skalabilitas dalam sistem. Namun, membuat beberapa instance dari aplikasi utama mungkin akan memperkenalkan beberapa kompleksitas, terutama dalam mengelola state dan memastikan konsistensi di seluruh instance. Bergantung pada desain dan persyaratan aplikasi, masih memungkinkan untuk menambahkan lebih banyak instance dari aplikasi utama, tetapi mungkin memerlukan pertimbangan tambahan seperti penyeimbangan beban dan mekanisme sinkronisasi data.
+
+3. Selama mengerjakan tutorial ini, saya belum mencoba membuat test saya sendiri ataupun dokumentasi pada Postman Collection.
